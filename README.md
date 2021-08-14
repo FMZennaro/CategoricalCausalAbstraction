@@ -1,6 +1,38 @@
+
 # CategoricalCausalAbstraction
-Abstraction of Causal Models
+A series of notebooks containing tutorials, reproduction of work in papers [1,2,3], and open notes on the problem of abstraction of structural causal models in a categorical framework.
 
-**Notebooks are best visualized on [nbviewer](https://nbviewer.jupyter.org/)** (equations, in particular, may not be rendered on github)
+### Disclaimers
 
-1. *Categorical Abstraction.ipynb*: a tutorial introduction to the categorical framework proposed by Rischel which relies on a category theory formalization to evaluate and measure the approximation (or error) introduced by abstractions between causal models.
+**Notebooks are best visualized on [nbviewer](https://nbviewer.jupyter.org/)**: equations, in particular, may not be rendered on github.
+
+**This is a work in progress**: notebooks are executable, but TODO sections are sprinkled across the notebooks.
+
+**Feedbacks are welcome**: mistakes are in all likelihood due to misunderstandings of the notebook author and suggestions/corrections are very welcome! :)
+
+**References** the notebook refers to ideas from *causality* and *category theory*. Useful references for causality are [4,5], while for category theory are [6,7].
+
+
+### Contents
+
+1. **Categorical Abstraction**: A tutorial notebook in which we explore the idea of abstraction between causal models following the framework presented in [1] and illustrating the main ideas by replicating (theoretically and experimentally) the examples in Sections 4.11-4.13 of [1].
+
+2. **Abstraction Mapping**: A notebook in which we take a closer look to the definition of abstraction between causal models that was presented in [1] and reviewed in the previous notebook. Along with the theoretical discussion we also implement classes to encode SCMs and abstractions.
+
+
+
+### Bibliography
+
+[1] Rischel, Eigil Fjeldgren. "The Category Theory of Causal Models." (2020).
+
+[2] Rubenstein, Paul K., et al. "Causal consistency of structural equation models." arXiv preprint arXiv:1707.00819 (2017).
+
+[3] Rischel, Eigil F., and Sebastian Weichwald. "Compositional Abstraction Error and a Category of Causal Models." arXiv preprint arXiv:2103.15758 (2021).
+
+[4] Pearl, Judea. Causality. Cambridge university press, 2009.
+
+[5] Peters, Jonas, Dominik Janzing, and Bernhard Schölkopf. Elements of causal inference: foundations and learning algorithms. The MIT Press, 2017.
+
+[6] Spivak, David I. Category theory for the sciences. MIT Press, 2014.
+
+[7] Fong, Brendan, and David I. Spivak. "Seven sketches in compositionality: An invitation to applied category theory." arXiv preprint arXiv:1803.05316 (2018).
