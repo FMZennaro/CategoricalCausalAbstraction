@@ -2,6 +2,12 @@
 # CategoricalCausalAbstraction
 A series of notebooks containing tutorials, reproduction of work in papers [1,2,3], and open notes on the problem of abstraction of structural causal models in a categorical framework.
 
+### Contents
+
+1. **Categorical Abstraction**: A tutorial notebook in which we explore the idea of abstraction between causal models following the framework presented in [1] and illustrating the main ideas by replicating (theoretically and experimentally) the examples in Sections 4.11-4.13 of [1].
+
+2. **Abstraction Mapping**: A notebook in which we take a closer look to the definition of abstraction between causal models that was presented in [1] and reviewed in the previous notebook. Along with the theoretical discussion we also implement classes to encode SCMs and abstractions.
+
 ### Disclaimers
 
 **Notebooks are best visualized on [nbviewer](https://nbviewer.jupyter.org/)**: equations, in particular, may not be rendered on github.
@@ -11,15 +17,6 @@ A series of notebooks containing tutorials, reproduction of work in papers [1,2,
 **Feedbacks are welcome**: mistakes are in all likelihood due to misunderstandings of the notebook author and suggestions/corrections are very welcome! :)
 
 **References** the notebook refers to ideas from *causality* and *category theory*. Useful references for causality are [4,5], while for category theory are [6,7].
-
-
-### Contents
-
-1. **Categorical Abstraction**: A tutorial notebook in which we explore the idea of abstraction between causal models following the framework presented in [1] and illustrating the main ideas by replicating (theoretically and experimentally) the examples in Sections 4.11-4.13 of [1].
-
-2. **Abstraction Mapping**: A notebook in which we take a closer look to the definition of abstraction between causal models that was presented in [1] and reviewed in the previous notebook. Along with the theoretical discussion we also implement classes to encode SCMs and abstractions.
-
-
 
 ### Bibliography
 
