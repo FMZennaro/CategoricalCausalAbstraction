@@ -8,6 +8,8 @@ A series of notebooks containing tutorials, reproduction of work in papers [1,2,
 
 2. **Abstraction Mapping**: A notebook in which we take a closer look to the definition of abstraction between causal models that was presented in [1] and reviewed in the previous notebook. Along with the theoretical discussion we also implement classes to encode SCMs and abstractions.
 
+3. **Transformations and Abstractions**: Another tutorial notebook where we consider in this case the concept of transformation and exact transformations from [2] and we perform a first example-driven comparison between abstractions and transformations.
+
 ### Disclaimers
 
 **Notebooks are best visualized on [nbviewer](https://nbviewer.jupyter.org/)**: equations, in particular, may not be rendered on github.
