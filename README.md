@@ -10,6 +10,8 @@ A series of notebooks containing tutorials, reproduction of work in papers [1,2,
 
 3. **Transformations and Abstractions**: Another tutorial notebook where we consider in this case the concept of transformation and exact transformations from [2] and we perform a first example-driven comparison between abstractions and transformations.
 
+4. **Automating Abstraction Error**: In this notebook we automate the estimation of abstraction error using the framework introduced in [1] and explored in the notebook *Categorical Abstraction*. We implement a function that estimate abstraction error as a function of a chosen evaluation set and metric.
+
 ### Disclaimers
 
 **Notebooks are best visualized on [nbviewer](https://nbviewer.jupyter.org/)**: equations, in particular, may not be rendered on github.
