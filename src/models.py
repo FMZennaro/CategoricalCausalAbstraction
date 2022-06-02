@@ -1,3 +1,6 @@
+
+### Legacy code used in the first notebooks
+
 import numpy as np
 import networkx as nx
 import itertools
