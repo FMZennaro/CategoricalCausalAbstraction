@@ -214,3 +214,34 @@ def get_A_Mt1_1_Mt1_1():
              'U': generate_values(2,2),
              }
     return Mt1_0(),Mt1_1(),R,a,alphas
+
+def instantiate_chain_models(mA,mBA,mX,mYX):
+    M0 = BN([('A','B')])
+    cpdA = cpd(variable='A',
+              variable_card=mA.shape[0],
+              values=mA,
+              evidence=None,
+              evidence_card=None)
+    cpdB = cpd(variable='B',
+              variable_card=mBA.shape[0],
+              values=mBA,
+              evidence=['A'],
+              evidence_card=[mA.shape[0]])
+    M0.add_cpds(cpdA,cpdB)
+    M0.check_model()
+    
+    M1 = BN([('A','B')])
+    cpdX = cpd(variable='X',
+              variable_card=mX.shape[0],
+              values=mX,
+              evidence=None,
+              evidence_card=None)
+    cpdY = cpd(variable='Y',
+              variable_card=mYX.shape[0],
+              values=mYX,
+              evidence=['X'],
+              evidence_card=[mX.shape[0]])
+    M1.add_cpds(cpdX,cpdY)
+    M1.check_model()
+
+    return M0,M1

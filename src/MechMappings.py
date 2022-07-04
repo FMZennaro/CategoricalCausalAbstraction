@@ -8,23 +8,36 @@ def _compute_maxent_input_distrib(M):
 def _compute_maxent_output_distrib(M):
     return np.ones(M.shape[0])/M.shape[0]
 
-
-def EI(M,base=2):
+def _compute_maxent_effects_distrib(M):
     maxent_input_distrib = _compute_maxent_input_distrib(M)
-    maxent_effects = np.dot(M,maxent_input_distrib)
+    return np.dot(M,maxent_input_distrib)
+
+def EI(M,maxent_effects=None,base=2):
+    if maxent_effects is None: maxent_effects = _compute_maxent_effects_distrib(M)
     KLs = stats.entropy(M, np.expand_dims(maxent_effects,axis=1),base=base)
-    EI = np.average(KLs)
-    return KLs,EI
+    ei = np.average(KLs)
+    return KLs,ei
+
+# Wrong approach
+#def diffEI(M,N,alpha,base=2):
+#    _,highEI = EI(N,None,base)
+#    print(np.dot(M,np.linalg.pinv(alpha)))
+#    _,lowEI = EI(np.dot(M,np.linalg.pinv(alpha)), _compute_maxent_effects_distrib(M), base)
+#    return lowEI,highEI, highEI-lowEI
+
+def diffEI(M,alpha,base=2):
+    _,lowEI = EI(M,None,base)
+    _,highEI = EI(np.dot(alpha, np.dot(M,np.linalg.pinv(alpha))),None,base)
+    return lowEI,highEI, highEI-lowEI
 
 def determinism(M,base=2):
     maxent_output_distrib = _compute_maxent_output_distrib(M)
     KLs = stats.entropy(M, np.expand_dims(maxent_output_distrib,axis=1),base=base)
-    determinism = np.average(KLs/np.log2(M.shape[1]))
+    determinism = np.average(KLs/math.log(M.shape[1],base))
     return KLs,determinism
 
 def degeneracy(M,base=2):
-    maxent_input_distrib = _compute_maxent_input_distrib(M)
-    maxent_effects = np.dot(M,maxent_input_distrib)
+    maxent_effects = _compute_maxent_effects_distrib(M)
     maxent_output_distrib = _compute_maxent_output_distrib(M)
     KLs = stats.entropy(maxent_effects, maxent_output_distrib,base=base)
     degeneracy = KLs/math.log(M.shape[1],base)

@@ -15,6 +15,7 @@ A series of notebooks containing tutorials, reproduction of work in the literatu
 
 5. **Compositional Abstraction Error** : An important property when working with approximate abstraction is the compositionality of errors. This property depends on the correct choice of a distance metric. In this notebook we review the examples and counterexamples presented in [Rischel2021].
 
+6. **Reviewing forms of consistency**: Assessment of the quality of an abstraction in the framework of [Rischel2020] is based on the evaluation of interventional consistency. In this notebook we review different types of consistency (observational, interventional, and counterfactual) in the context of abstraction.
 
 
 ## Disclaimers

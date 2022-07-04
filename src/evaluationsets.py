@@ -29,6 +29,39 @@ def check_path_between_sets(G,sources,targets):
 
     return nx.has_path(augmentedG,augmented_s,augmented_t)
 
+
+def check_path_between_each_source_and_target(G,sources,targets):
+    """
+    It computes whether for each source there is a path going to (at least) a target AND for each target if there is a path arriving at that target
+
+    Args:
+        G: a networkx graph
+        sources: a set of source nodes in G
+        targets: a set of target nodes in G
+
+    Returns:
+        True if there is a path in G for each source and target
+    """
+    
+    for s in sources:
+        has_path = False
+        for t in targets:
+            if nx.has_path(G,s,t):
+                has_path=True
+                break
+        if not(has_path): return False
+    
+    for t in targets:
+        has_path = False
+        for s in sources:
+            if nx.has_path(G,s,t):
+                has_path=True
+                break
+        if not(has_path): return False
+        
+    return True
+
+
 def powerset(iterable):
     """
     It computes the power set of a set.
@@ -93,6 +126,63 @@ def get_sets_in_M1_with_directed_path_in_M1_or_M0(M0,M1,a,verbose=False):
                         J.append([M1_sources,M1_targets])
                     else:
                         if verbose: print('---- Checking {0} -> {1}: False'.format(M0_sources,M0_targets))
+    if verbose: print('\n {0} legitimate pairs of sets out of {1} possbile pairs of sets'.format(len(J),len(sets)**2))  
+
+    return J
+
+def get_sets_in_M1_with_directed_path_in_M1_and_M0(M0,M1,a,verbose=False):
+    J = []
+    sets = list(powerset(M1.nodes()))
+    sets.remove(())
+
+    for i in sets:
+        for j in sets:
+            M1_sources = list(i)
+            M1_targets = list(j)
+            if not(any(x in M1_sources for x in M1_targets)):            
+                if check_path_between_sets(M1,M1_sources,M1_targets):
+                    if verbose: print('- Checking {0} -> {1}: True'.format(M1_sources,M1_targets))
+                    M0_sources = ut.inverse_fx(a,M1_sources)
+                    M0_targets = ut.inverse_fx(a,M1_targets)
+                    if check_path_between_sets(M0,M0_sources,M0_targets):
+                        if verbose: print('---- Checking {0} -> {1}: True'.format(M0_sources,M0_targets))
+                        J.append([M1_sources,M1_targets])
+                    else:
+                        if verbose: print('---- Checking {0} -> {1}: False'.format(M0_sources,M0_targets))
+                        if verbose: print('Found an inconsistent diagram. Returning None')
+                        return None
+                else:
+                    if verbose: print('- Checking {0} -> {1}: False'.format(M1_sources,M1_targets))
+                    
+    if verbose: print('\n {0} legitimate pairs of sets out of {1} possbile pairs of sets'.format(len(J),len(sets)**2))  
+
+    return J
+
+
+def get_causal_sets_in_M1_with_directed_path_in_M1_and_M0(M0,M1,a,verbose=False):
+    J = []
+    sets = list(powerset(M1.nodes()))
+    sets.remove(())
+
+    for i in sets:
+        for j in sets:
+            M1_sources = list(i)
+            M1_targets = list(j)
+            if not(any(x in M1_sources for x in M1_targets)):            
+                if check_path_between_each_source_and_target(M1,M1_sources,M1_targets):
+                    if verbose: print('- Checking {0} -> {1}: True'.format(M1_sources,M1_targets))
+                    M0_sources = ut.inverse_fx(a,M1_sources)
+                    M0_targets = ut.inverse_fx(a,M1_targets)
+                    if check_path_between_each_source_and_target(M0,M0_sources,M0_targets):
+                        if verbose: print('---- Checking {0} -> {1}: True'.format(M0_sources,M0_targets))
+                        J.append([M1_sources,M1_targets])
+                    else:
+                        if verbose: print('---- Checking {0} -> {1}: False'.format(M0_sources,M0_targets))
+                        if verbose: print('Found an inconsistent diagram. Returning None')
+                        return None
+                else:
+                    if verbose: print('- Checking {0} -> {1}: False'.format(M1_sources,M1_targets))
+                    
     if verbose: print('\n {0} legitimate pairs of sets out of {1} possbile pairs of sets'.format(len(J),len(sets)**2))  
 
     return J
