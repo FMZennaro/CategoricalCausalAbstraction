@@ -17,6 +17,12 @@ A series of notebooks containing tutorials, reproduction of work in the literatu
 
 6. **Reviewing forms of consistency**: Assessment of the quality of an abstraction in the framework of [Rischel2020] is based on the evaluation of interventional consistency. In this notebook we review different types of consistency (observational, interventional, and counterfactual) in the context of abstraction.
 
+P1. **Motivating example**: code and simulation in support for the paper [Zennaro2022a]
+
+X1. **GA Abstraction Learning.ipynb**: preliminary attempt at solving an abstraction learning problem using a genetic algorithm.
+
+
+
 
 ## Disclaimers
 
@@ -58,3 +64,7 @@ A series of notebooks containing tutorials, reproduction of work in the literatu
 [Hoel2013] Hoel, Erik P., Larissa Albantakis, and Giulio Tononi. "Quantifying causal emergence shows that macro can beat micro." Proceedings of the National Academy of Sciences 110.49 (2013): 19790-19795.
 
 [Hoel2017] Hoel, Erik P. "When the map is better than the territory." Entropy 19.5 (2017): 188.
+
+[Zennaro2022a] Zennaro, Fabio Massimo, Paolo Turrini, and Theo Damoulas. "Towards Computing an Optimal Abstraction for Structural Causal Models." UAI 2022 Workshop on Causal Representation Learning.
+
+[Zennaro2022b] Zennaro, Fabio Massimo. "Abstraction between Structural Causal Models: A Review of Definitions and Properties." UAI 2022 Workshop on Causal Representation Learning.
