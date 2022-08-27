@@ -17,6 +17,8 @@ A series of notebooks containing tutorials, reproduction of work in the literatu
 
 6. **Reviewing forms of consistency**: Assessment of the quality of an abstraction in the framework of [Rischel2020] is based on the evaluation of interventional consistency. In this notebook we review different types of consistency (observational, interventional, and counterfactual) in the context of abstraction.
 
+7. **(Interlude) Modularizing Abstraction Code**: This (interlude) notebook explains how the monolithic code for the Abstraction class has been refactored into a set of modular classes dealing with different aspects of abstraction. 
+
 P1. **Motivating example**: code and simulation in support for the paper [Zennaro2022a]
 
 X1. **GA Abstraction Learning.ipynb**: preliminary attempt at solving an abstraction learning problem using a genetic algorithm.

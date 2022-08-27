@@ -73,3 +73,31 @@ def is_surjective(frange,fcodomain):
         True if codomain and range are set equal 
     """ 
     return set(fcodomain)==set(frange)
+
+def flat_tensor_product(x,y):
+    tensor = np.einsum('ij,kl->ikjl',x,y)
+    return tensor.reshape((tensor.shape[0]*tensor.shape[1],tensor.shape[2]*tensor.shape[3]))
+
+def tensorize_list(tensor,l):
+        #Given a list of matrices iteratively compute the tensor product and flatten
+        if tensor is None:
+            if len(l)>1:
+                tensor = flat_tensor_product(l[0],l[1])
+                return tensorize_list(tensor,l[2:])
+            else:
+                return l[0]
+        else:
+            if len(l)>0:
+                tensor = flat_tensor_product(tensor,l[0])
+                return tensorize_list(tensor,l[1:])
+            else:
+                return tensor
+
+def invert_matrix_max_entropy(A):        
+    invA = np.transpose(A)
+    invA = invA / np.sum(invA,axis=0)
+    return invA
+    
+def invert_matrix_pinv(A):
+    invA = np.linalg.pinv(A)
+    return invA

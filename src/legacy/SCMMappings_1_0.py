@@ -101,7 +101,6 @@ class Abstraction(SCMMapping):
 
     
     ### ABSTRACTION PROPERTIES
-    
     def is_varlevel_complete(self):
         return self.M0.number_of_nodes() == self.nR
     
@@ -130,13 +129,13 @@ class Abstraction(SCMMapping):
         
     def print_mappings_alphas(self):
         print('** The mappings alpha are indexed by M1 **')
-        for k in alphas.keys():
+        for k in self.alphas.keys():
             domain = self.invert_a(k)
             print('Mapping alpha_{0}: {1} -> {2}'.format(k, domain ,k))
     
     def print_mappings_alphas_cardinalities(self):
         print('** The mappings alpha are indexed by M1 **')
-        for k in alphas.keys():
+        for k in self.alphas.keys():
             card_domain,card_codomain = self.get_cardinalities_alpha(k)
             print('Mapping alpha_{0}: {1} -> {2}'.format(k, card_domain, card_codomain))
             
@@ -257,12 +256,11 @@ class Abstraction(SCMMapping):
         return cond_TS_val
     
     
-    ### ABSTRACTION ERROR FUNCTION
-    
-    def evaluate_abstraction_error(self, metric=None, J_algorithm=None, verbose=False, debug=False):
-        if J_algorithm is None:
+    ### ABSTRACTION ERROR FUNCTION    
+    def evaluate_abstraction_error(self, metric=None, J=None,J_algorithm=None, verbose=False, debug=False):
+        if J is None and J_algorithm is None:
             J = es.get_sets_in_M1_with_directed_path_in_M1_or_M0(self.M0,self.M1,self.a,verbose=verbose)
-        else:
+        elif J is None:
             J = J_algorithm(self)
             
         if metric is None:
@@ -328,11 +326,10 @@ class Abstraction(SCMMapping):
         return abstraction_errors
     
     def is_exact(self, metric=None, J_algorithm=None, verbose=False):
-        print ('Abstraction approximation error is: {0}'.format(np.max(self.evaluate_abstraction_error(metric,J_algorithm,verbose))))
+        print ('Abstraction approximation error is: {0}'.format(np.max(self.evaluate_abstraction_error(metric,J_algorithm=J_algorithm,verbose=verbose))))
 
         
-    ### INFO LOSS FUNCTION
-    
+    ### INFO LOSS FUNCTION    
     def compute_joints_and_invalpha(self, invalpha_algorithm=None, verbose=False):
         if invalpha_algorithm is None:
             invalpha, orderingM0, orderingM1 = self.invert_alpha_max_entropy()
@@ -404,7 +401,6 @@ class Abstraction(SCMMapping):
     
     
     ### EFFECTIVE INFORMATION FUNCTION
-    
     def evaluate_EIs(self, J_algorithm=None, base=2, verbose=False, debug=False):
         if J_algorithm is None:
             J = es.get_sets_in_M1_with_directed_path_in_M1_or_M0(self.M0,self.M1,self.a,verbose=verbose)
