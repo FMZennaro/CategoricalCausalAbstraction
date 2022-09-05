@@ -2,23 +2,10 @@
 import numpy as np
 import itertools
 
-from scipy.sparse import coo_matrix
+import src.utils as ut
 from src.SCMMappings_1_1 import Abstraction
 from src.evaluating import AbstractionErrorEvaluator
 
-def map_vect2matrix(v):
-    dom = len(v)
-    codom = np.max(v)+1
-    M = coo_matrix((np.ones(dom), (v,np.arange(dom))), shape=(codom,dom)).toarray()
-    return M
-
-def map_matrix2vect(M):
-    matrix = coo_matrix(M)
-    rows = matrix.row
-    cols = matrix.col
-    idxs = np.argsort(cols)
-    v = matrix.row[idxs]
-    return v
 
 def enumerate_all_surjective_maps(dom,codom):
     diff = dom-codom
@@ -37,7 +24,7 @@ def get_all_surjective_matrices(dom,codom):
     vs = enumerate_all_surjective_maps(dom,codom)
     Ms = []
     for v in vs:
-        Ms.append(map_vect2matrix(v))
+        Ms.append(ut.map_vect2matrix(v))
     return Ms
 
 def learn_alpha_by_enumeration(A,J=None):

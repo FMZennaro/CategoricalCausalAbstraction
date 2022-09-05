@@ -76,7 +76,7 @@ class Abstraction(SCMMapping):
     
     ### UTILS    
     def copy(self):
-        Acopy = pgmpy_Abstraction(self.M0, self.M1, self.nR, 
+        Acopy = Abstraction(self.M0, self.M1,
                             R=self.R.copy(), a=self.a.copy(), alphas=self.alphas.copy())
         return Acopy
     
@@ -84,7 +84,7 @@ class Abstraction(SCMMapping):
         return ut.inverse_fx(self.a,v)
     
     def get_cardinalities_alpha(self,alphakey):
-        return ut.get_cardinalities_Falpha(self.a,alphakey,self.M0.get_cardinality,self.M1.get_cardinality)
+        return ut.get_cardinalities_Falpha(self.a,alphakey,self.M0.get_cardinality(),self.M1.get_cardinality())
             
     def compute_mechanisms(self,inference,sources,targets,cardinalities):
         #Compute P(targets|do(sources)) as P(targets|sources) in M_do(sources)
@@ -155,7 +155,7 @@ class Abstraction(SCMMapping):
         if invalpha_algorithm is None:
             invalpha = ut.invert_matrix_max_entropy(Alpha)
         else:
-            invalpha = invalpha_algorithm(self)
+            invalpha = invalpha_algorithm(Alpha)
         if verbose: print('Alpha^-1: {0}'.format(invalpha))
             
         return invalpha
