@@ -2,3 +2,7 @@
 ignore_*
 .ipynb_checkpoints/
 __pycache__/
+_toc.yml
+_config.yml
+_build/
+_intro.md
