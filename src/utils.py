@@ -2,6 +2,10 @@
 import numpy as np
 from scipy.sparse import coo_matrix
 
+import torch
+import itertools
+from pgmpy.inference import VariableElimination
+
 def inverse_fx(f,x):
     """
     Given a function f as a dictionary, it computes f^-1(x).
@@ -102,6 +106,24 @@ def is_surjective(frange,fcodomain):
     """ 
     return set(fcodomain)==set(frange)
 
+def is_matrix_surjective(M):
+    """
+    Check whether a binary matrix may encode a surjective function
+
+    Args:
+        M: 2D binary numpy array
+
+    Returns:
+        True if every row contains at least a 1
+        
+    Example:
+        M = [[0,1,0],
+             [0,0,1],
+             [1,0,0]].
+        res = True.
+    """ 
+    return np.all(np.sum(M,axis=1)>=1)
+
 def flat_tensor_product(x,y):
     """
     Compute the tensor product of two 2D matrix and flatten it into a new 2D matrix
@@ -188,12 +210,13 @@ def invert_matrix_pinv(A):
     invA = np.linalg.pinv(A)
     return invA
 
-def map_vect2matrix(v):
+def map_vect2matrix(v,rows=None):
     """
     Covert an integer vector into a binary matrix
 
     Args:
         v: integer vector
+        rows: integer denoting the number of rows (if the vectors encode a surjective map this param is optional)
 
     Returns:
         M: 2D numpy array
@@ -205,8 +228,11 @@ def map_vect2matrix(v):
              [1,0,0]].
     """
     dom = len(v)
-    codom = np.max(v)+1
-    M = coo_matrix((np.ones(dom), (v,np.arange(dom))), shape=(codom,dom)).toarray()
+    if rows==None: 
+        codom = np.max(v)+1
+    else:
+        codom = rows
+    M = coo_matrix((np.ones(dom), (v,np.arange(dom))), shape=(codom,dom), dtype=np.int32).toarray()
     return M
 
 def map_matrix2vect(M):
@@ -231,3 +257,34 @@ def map_matrix2vect(M):
     idxs = np.argsort(cols)
     v = matrix.row[idxs]
     return v
+
+def powerset(iterable):
+    """
+    It computes the power set of a set.
+
+    Args:
+        iterable: an iterable
+
+    Returns:
+        The power set of iterable
+    """
+    s = list(iterable)
+    return itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s)+1))
+
+
+def one_hot_encoding(data, num_classes):
+    res = np.zeros((data.shape[0],num_classes),dtype=np.float32)
+    for i in range(data.shape[0]):
+        tmp = np.zeros((num_classes),dtype=np.float32)
+        tmp[data[i]] = 1
+        res[i] = tmp
+    return res
+
+def one_hot_vector(mat2d, dims):
+    res = np.zeros((mat2d.shape[0], np.prod(dims)), dtype=np.float32)
+    for i in range(mat2d.shape[0]):
+        tmp = np.zeros(dims, dtype=np.float32)
+        tmp[mat2d[i]] = 1
+        vec = tmp.flatten()
+        res[i] = vec
+    return res

@@ -94,6 +94,11 @@ class AbstractionErrorEvaluator(AbstractionEvaluator):
         errors[np.argwhere(np.isnan(errors))] = 0
         return np.max(errors)
     
+    def evaluate_cumulative_abstraction_errors(self, metric=None, J=None,J_algorithm=None, verbose=False):
+        errors = np.array(self.evaluate_abstraction_errors(metric=metric,J=J,J_algorithm=J_algorithm,verbose=verbose))
+        errors[np.argwhere(np.isnan(errors))] = 0
+        return np.sum(errors)
+    
     def is_exact(self, metric=None,J=None,J_algorithm=None,verbose=False, rtol=1e-05, atol=1e-08):
         error = self.evaluate_overall_abstraction_error(metric=metric,J=J,J_algorithm=J_algorithm,verbose=verbose)
         return np.isclose(0,error,rtol=rtol,atol=atol)
