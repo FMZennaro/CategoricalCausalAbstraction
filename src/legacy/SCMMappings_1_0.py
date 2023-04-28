@@ -97,7 +97,7 @@ class Abstraction(SCMMapping):
         return ut.inverse_fx(self.a,v)
     
     def get_cardinalities_alpha(self,alphakey):
-        return ut.get_cardinalities_Falpha(self.a,alphakey,self.M0.get_cardinality,self.M1.get_cardinality)
+        return ut.get_cardinalities_Falpha(self.a,alphakey,self.M0.get_cardinality(),self.M1.get_cardinality())
 
     
     ### ABSTRACTION PROPERTIES
@@ -346,8 +346,11 @@ class Abstraction(SCMMapping):
         joint_M0 = joint_M0.reshape((np.prod(joint_M0.shape),1))
         if verbose: print('M0 joint: {0}'.format(joint_M0))
         
-        inferM1 = VariableElimination(self.M1)
-        joint_M1 = inferM1.query(orderingM1,show_progress=False)
+        if (len(self.M1.nodes)==1 and self.M1.get_cardinality(orderingM1[0])==1):
+            joint_M1 = self.M1.get_cpds(orderingM1[0])
+        else:
+            inferM1 = VariableElimination(self.M1)
+            joint_M1 = inferM1.query(orderingM1,show_progress=False)
         
         old_indexes = range(len(orderingM1))
         new_indexes = [(orderingM1).index(i) for i in joint_M1.variables]
